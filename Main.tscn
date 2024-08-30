@@ -47,7 +47,7 @@ data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0
 [node name="Node3D" type="Node3D"]
 
 [node name="Plane" type="StaticBody3D" parent="."]
-transform = Transform3D(8.00532, 0, 0, 0, 1, 0, 0, 0, 7.9405, 0, 0, 0)
+transform = Transform3D(15.1252, 0, 0, 0, 1.88964, 0, 0, 0, 15.0022, 0, 0, 0)
 axis_lock_linear_z = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Plane"]
@@ -82,31 +82,40 @@ shape = SubResource("BoxShape3D_e32l6")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.979329, -0.155992, 0.128769, 0, 0.636603, 0.771191, -0.202275, -0.75525, 0.623444, 0.108692, 4.37501, -0.26738)
 
-[node name="Platform" type="StaticBody3D" parent="."]
+[node name="Ramp" type="StaticBody3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ramp"]
 transform = Transform3D(7.80502, 0, 0, 0, 0.510383, 4.05939, 0, -0.142242, 14.5656, 0, 0.83551, 12.5622)
 mesh = SubResource("BoxMesh_2ba3e")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ramp"]
 transform = Transform3D(7.80502, 0, 0, 0, 0.510383, 4.05939, 0, -0.142242, 14.5656, 0, 0.83551, 12.5622)
 shape = SubResource("ConcavePolygonShape3D_xc1rn")
 
-[node name="Wall" type="StaticBody3D" parent="."]
+[node name="MantleRect" type="StaticBody3D" parent="."]
+transform = Transform3D(8.97445, 0, 0, 0, 8.93713, 0, 0, 0, 48.5207, 27.9137, 4.39865, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MantleRect"]
+mesh = SubResource("BoxMesh_2ba3e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MantleRect"]
+shape = SubResource("ConcavePolygonShape3D_xc1rn")
+
+[node name="WalljumpWalls1" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WalljumpWalls1"]
 transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, 5.16596, 6.14149, -19.2646)
 mesh = SubResource("BoxMesh_2ba3e")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WalljumpWalls1"]
 transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, 5.16596, 6.14149, -19.2646)
 shape = SubResource("ConcavePolygonShape3D_2f22r")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Wall"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WalljumpWalls1"]
 transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, -5.6239, 6.14149, -19.2646)
 mesh = SubResource("BoxMesh_2ba3e")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Wall"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="WalljumpWalls1"]
 transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, -5.6239, 6.14149, -19.2646)
 shape = SubResource("ConcavePolygonShape3D_q5m3m")
 
@@ -133,24 +142,22 @@ transform = Transform3D(0.0382657, 0, 0.999268, 0, 0.934811, 0, -0.999268, 0, 0.
 pixel_size = 0.2
 text = "Surfing For Tudor"
 
-[node name="Wall2" type="StaticBody3D" parent="."]
+[node name="WalljumpWalls2" type="StaticBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.1085, 0, 26.3453)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WalljumpWalls2"]
 transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, 5.16596, 6.14149, -19.2646)
 mesh = SubResource("BoxMesh_2ba3e")
-skeleton = NodePath("../../Wall2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WalljumpWalls2"]
 transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, 5.16596, 6.14149, -19.2646)
 shape = SubResource("ConcavePolygonShape3D_2f22r")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Wall2"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="WalljumpWalls2"]
 transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, -5.6239, 6.14149, -19.2646)
 mesh = SubResource("BoxMesh_2ba3e")
-skeleton = NodePath("../../Wall2")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Wall2"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="WalljumpWalls2"]
 transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, -5.6239, 6.14149, -19.2646)
 shape = SubResource("ConcavePolygonShape3D_q5m3m")
 

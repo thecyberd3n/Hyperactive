@@ -53,7 +53,7 @@ func isWallRight():
 					return false
 
 func walljump():
-	velocity.y = 15*$Camera3D.rotation_degrees.x/40
+	velocity.y = 15*($Camera3D.rotation_degrees.x+50)/60
 	if not get_wall_normal().x == 0:
 		if facingNorth():
 			if isWallRight():
@@ -153,7 +153,7 @@ func _physics_process(delta: float) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
-	if Input.is_action_pressed("Sprint") and is_on_floor():
+	if Input.is_action_pressed("Sprint") and is_on_floor() and not crouching:
 		SPEED = 3
 		targetFOV = 120
 	elif is_on_floor():
@@ -177,10 +177,11 @@ func _physics_process(delta: float) -> void:
 			direction.x = 0
 		else:
 			direction.z = 0
+
 	if is_on_floor() or is_on_wall():
 		friction = 0.85
 	elif crouching == true:
-		friction = 0.99
+		friction = 0.95
 
 	if is_on_floor():
 		vx = direction.x * SPEED
