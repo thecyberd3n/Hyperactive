@@ -66,14 +66,7 @@ func _physics_process(delta: float) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	targetRot = 0
-	if Input.is_action_pressed("Left"):
-		targetRot = 3
 
-	elif Input.is_action_pressed("Right"):
-		targetRot = -3
-
-	else:
-		targetRot = 0
 	#if Input.is_action_pressed("Forward"):
 
 		

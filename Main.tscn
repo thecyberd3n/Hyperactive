@@ -1,6 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://5k6g5molxtgs"]
+[gd_scene load_steps=16 format=3 uid="uid://5k6g5molxtgs"]
 
+[ext_resource type="Texture2D" uid="uid://bt6wyk0v7hygi" path="res://icon.svg" id="1_6jyoj"]
 [ext_resource type="Script" path="res://charactercontroller.gd" id="1_gtlgq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mv5dr"]
+albedo_texture = ExtResource("1_6jyoj")
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l41cm"]
 load_path = "res://.godot/imported/gravel_concrete_03_diff_4k.png-ef503d596c12af809edc5a3d453d5c9b.s3tc.ctex"
@@ -48,6 +52,7 @@ axis_lock_linear_z = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Plane"]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5.08, 0, 0, -5.92112e-06)
+material_override = SubResource("StandardMaterial3D_mv5dr")
 mesh = SubResource("PlaneMesh_dldhv")
 skeleton = NodePath("../..")
 
