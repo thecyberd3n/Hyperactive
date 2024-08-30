@@ -31,7 +31,7 @@ size = Vector3(1.97583, 1.14632, 1.99048)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1syc6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e32l6"]
-size = Vector3(0.0433044, 0.0809479, 0.04599)
+size = Vector3(0.0433044, 0.0806928, 0.04599)
 
 [sub_resource type="BoxMesh" id="BoxMesh_2ba3e"]
 
@@ -61,8 +61,9 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5.08, 0.0336663, -2.82263, 0.001
 shape = SubResource("BoxShape3D_6y1k0")
 
 [node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(5, 0, 0, 0, 7.83208, 0, 0, 0, 5, 0, 0.879192, 0)
+transform = Transform3D(5, 0, 0, 0, 8.08876, 0, 0, 0, 5, 0, 0.879192, 0)
 axis_lock_angular_z = true
+wall_min_slide_angle = 0.797615
 floor_snap_length = 1.0
 script = ExtResource("1_gtlgq")
 
@@ -74,8 +75,8 @@ mesh = SubResource("CapsuleMesh_1syc6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.139605, 0.709409, 0.121869)
 fov = 82.2236
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(4.93115, 0, 0.840103, 0, 5, 0, -0.826873, 0, 5.01005, 0.153372, 0.584673, 0.12221)
+[node name="Collider" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(4.93115, 0, 0.840103, 0, 5, 0, -0.826873, 0, 5.01005, 0.153372, 0.584334, 0.12221)
 shape = SubResource("BoxShape3D_e32l6")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

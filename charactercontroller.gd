@@ -12,7 +12,8 @@ var friction = 0.7
 var sprintGround = false
 var vx = 0
 var vz = 0
-
+const walljumpPower = 80
+var crouching = false
 
 func facingNorth():
 	if 90 > rotation_degrees.y and rotation_degrees.y > -90:
@@ -56,25 +57,25 @@ func walljump():
 	if not get_wall_normal().x == 0:
 		if facingNorth():
 			if isWallRight():
-				velocity.x = -70
+				velocity.x = -walljumpPower
 			else:
-				velocity.x = 70
+				velocity.x = walljumpPower
 		else:
 			if isWallRight():
-				velocity.x = 70
+				velocity.x = walljumpPower
 			else:
-				velocity.x = -70
+				velocity.x = -walljumpPower
 	else:
 		if facingWest():
 			if isWallRight():
-				velocity.z = 70
+				velocity.z = walljumpPower
 			else:
-				velocity.z = -70
+				velocity.z = -walljumpPower
 		else:
 			if isWallRight():
-				velocity.z = -70
+				velocity.z = -walljumpPower
 			else:
-				velocity.z = 70
+				velocity.z = walljumpPower
 func stickToWall():
 	if not get_wall_normal().x == 0:
 		if facingNorth():
@@ -115,65 +116,68 @@ func _input(event):
 		if $Camera3D.rotation_degrees.x >80:
 			$Camera3D.rotation_degrees.x = 79
 	rotation.z = oldRot
-func _physics_process(delta: float) -> void:
+	
 
+
+
+
+func _physics_process(delta: float) -> void:
 
 	if not is_on_floor() and not is_on_wall():
 		if velocity.y >= -10:
 			velocity.y -= 30 * delta
 	elif is_on_wall():
+		if velocity.y> 0:
+			velocity.y = 0
 		if velocity.y >= -10:
-			velocity.y -= 0 * delta
-			
-	if is_on_wall_only():
+			velocity.y -= 5 * delta
 
+	if is_on_wall_only():
 		if isWallRight():
 			$Camera3D.rotation_degrees.z = move_toward($Camera3D.rotation_degrees.z, 5, 1)
 		else:
 			$Camera3D.rotation_degrees.z = move_toward($Camera3D.rotation_degrees.z, -5, 1)
 	else:
 		$Camera3D.rotation_degrees.z = move_toward($Camera3D.rotation_degrees.z, 0, 1)
-	
 
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	elif Input.is_action_just_pressed("Jump") and is_on_wall_only():
 		walljump()
 	elif is_on_wall_only() and not Input.is_action_just_pressed("Jump"):
-		velocity.y = 0
 		stickToWall()
-		
 
 	if Input.is_action_just_pressed("Esc"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if Input.is_mouse_button_pressed( 1 ):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
+
+
 	if Input.is_action_pressed("Sprint") and is_on_floor():
 		SPEED = 3
 		targetFOV = 120
-
 	elif is_on_floor():
 		targetFOV = 95
 		SPEED = 2.2
-
 	$Camera3D.set_fov($Camera3D.fov+((targetFOV-$Camera3D.fov)/15))
-
 	
-
-
+	if Input.is_action_pressed("Crouch"):
+		scale.y = scale.y+((4-scale.y)/15)
+		crouching=true
+	else:
+		scale.y = scale.y+((8-scale.y)/15)
+		crouching=false
 
 
 
 	input_dir = Input.get_vector("Left", "Right", "Forward", "Back")
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_wall_only():
-		direction.z = 0
+		direction.x = 0
 	if is_on_floor() or is_on_wall():
 		friction = 0.85
-	else:
-
-		friction = 0.85
+	elif crouching == true:
+		friction = 0.95
 
 	if is_on_floor():
 		vx = direction.x * SPEED
@@ -188,8 +192,5 @@ func _physics_process(delta: float) -> void:
 
 	velocity.x *= friction
 	velocity.z *= friction
-
-	#velocity.x = move_toward(velocity.x, 0, friction)
-	#velocity.z = move_toward(velocity.z, 0, friction)
 
 	move_and_slide()
