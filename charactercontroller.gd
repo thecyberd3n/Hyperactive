@@ -1,8 +1,5 @@
 extends CharacterBody3D
 
-
-
-
 var SPEED = 1.0
 const JUMP_VELOCITY = 12
 const sensitivity = 0.4
@@ -15,11 +12,14 @@ var friction = 0.7
 var sprintGround = false
 var vx = 0
 var vz = 0
+
+
 func facingNorth():
 	if 90 > rotation_degrees.y and rotation_degrees.y > -90:
 		return true
 	else:
 		return false
+
 func facingWest():
 	if 0 < rotation_degrees.y and rotation_degrees.y < 180:
 		return true
@@ -50,6 +50,55 @@ func isWallRight():
 					return true
 				else:
 					return false
+
+func walljump():
+	velocity.y = 15*$Camera3D.rotation_degrees.x/40
+	if not get_wall_normal().x == 0:
+		if facingNorth():
+			if isWallRight():
+				velocity.x = -70
+			else:
+				velocity.x = 70
+		else:
+			if isWallRight():
+				velocity.x = 70
+			else:
+				velocity.x = -70
+	else:
+		if facingWest():
+			if isWallRight():
+				velocity.z = 70
+			else:
+				velocity.z = -70
+		else:
+			if isWallRight():
+				velocity.z = -70
+			else:
+				velocity.z = 70
+func stickToWall():
+	if not get_wall_normal().x == 0:
+		if facingNorth():
+			if isWallRight():
+				velocity.x = 10
+			else:
+				velocity.x = -10
+		else:
+			if isWallRight():
+				velocity.x = -10
+			else:
+				velocity.x = 10
+	else:
+		if facingWest():
+			if isWallRight():
+				velocity.z = -10
+			else:
+				velocity.z = 10
+		else:
+			if isWallRight():
+				velocity.z = 10
+			else:
+				velocity.z = -10
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$Camera3D.rotation_edit_mode = 2
@@ -68,19 +117,6 @@ func _input(event):
 	rotation.z = oldRot
 func _physics_process(delta: float) -> void:
 
-	if facingNorth():
-		print("North")
-	else:
-		print("South")
-
-	if facingWest():
-		print("West")
-	else:
-		print("East")
-
-
-
-
 
 	if not is_on_floor() and not is_on_wall():
 		if velocity.y >= -10:
@@ -97,58 +133,17 @@ func _physics_process(delta: float) -> void:
 			$Camera3D.rotation_degrees.z = move_toward($Camera3D.rotation_degrees.z, -5, 1)
 	else:
 		$Camera3D.rotation_degrees.z = move_toward($Camera3D.rotation_degrees.z, 0, 1)
-	print($Camera3D.rotation_degrees.x)
+	
+
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-	elif Input.is_action_pressed("Jump") and is_on_wall_only():
-		velocity.y = 15*$Camera3D.rotation_degrees.x/40
-		if not get_wall_normal().x == 0:
-			if facingNorth():
-				if isWallRight():
-					velocity.x = -70
-				else:
-					velocity.x = 70
-			else:
-				if isWallRight():
-					velocity.x = 70
-				else:
-					velocity.x = -70
-		else:
-			if facingWest():
-				if isWallRight():
-					velocity.z = 70
-				else:
-					velocity.z = -70
-			else:
-				if isWallRight():
-					velocity.z = -70
-				else:
-					velocity.z = 70
+	elif Input.is_action_just_pressed("Jump") and is_on_wall_only():
+		walljump()
 	elif is_on_wall_only() and not Input.is_action_just_pressed("Jump"):
 		velocity.y = 0
-		print(get_wall_normal().x)
-		if not get_wall_normal().x == 0:
-			if facingNorth():
-				if isWallRight():
-					velocity.x = 10
-				else:
-					velocity.x = -10
-			else:
-				if isWallRight():
-					velocity.x = -10
-				else:
-					velocity.x = 10
-		else:
-			if facingWest():
-				if isWallRight():
-					velocity.z = -10
-				else:
-					velocity.z = 10
-			else:
-				if isWallRight():
-					velocity.z = 10
-				else:
-					velocity.z = -10
+		stickToWall()
+		
+
 	if Input.is_action_just_pressed("Esc"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if Input.is_mouse_button_pressed( 1 ):
