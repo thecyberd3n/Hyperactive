@@ -54,7 +54,7 @@ func isWallRight():
 					return false
 
 func walljump():
-	velocity.y = 15*($Camera3D.rotation_degrees.x+50)/60
+	velocity.y = 23*($Camera3D.rotation_degrees.x+50)/60
 	if not get_wall_normal().x == 0:
 		if facingNorth():
 			if isWallRight():

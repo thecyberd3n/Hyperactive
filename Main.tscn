@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://5k6g5molxtgs"]
+[gd_scene load_steps=22 format=3 uid="uid://5k6g5molxtgs"]
 
 [ext_resource type="Texture2D" uid="uid://bt6wyk0v7hygi" path="res://icon.svg" id="1_6jyoj"]
 [ext_resource type="Script" path="res://charactercontroller.gd" id="1_gtlgq"]
 [ext_resource type="FontFile" uid="uid://bdn7g4pbyqlnp" path="res://Dosis-Bold.ttf" id="3_c2vrt"]
+[ext_resource type="Texture2D" uid="uid://d3njt00g2nsf8" path="res://skybox.jpeg" id="3_q1487"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mv5dr"]
 albedo_texture = ExtResource("1_6jyoj")
@@ -30,6 +31,16 @@ material = SubResource("StandardMaterial3D_l0fio")
 size = Vector3(1.97583, 1.14632, 1.99048)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1syc6"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_f748r"]
+panorama = ExtResource("3_q1487")
+
+[sub_resource type="Sky" id="Sky_sgri8"]
+sky_material = SubResource("PanoramaSkyMaterial_f748r")
+
+[sub_resource type="Environment" id="Environment_quylf"]
+background_mode = 2
+sky = SubResource("Sky_sgri8")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e32l6"]
 size = Vector3(0.0433044, 0.0806928, 0.04599)
@@ -81,6 +92,7 @@ mesh = SubResource("CapsuleMesh_1syc6")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.139605, 0.709409, 0.121869)
+environment = SubResource("Environment_quylf")
 fov = 82.2236
 
 [node name="Collider" type="CollisionShape3D" parent="Player"]
