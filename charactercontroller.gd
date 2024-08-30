@@ -12,7 +12,7 @@ var oldRot = 0
 var direction = 0
 var input_dir =  0
 var friction = 0.7
-var groundSpeed = 0
+var sprintGround = false
 var vx = 0
 var vy = 0
 
@@ -58,14 +58,18 @@ func _physics_process(delta: float) -> void:
 	
 	
 	if Input.is_action_pressed("Sprint"):
-		SPEED = 3.5
+		SPEED = 2.6
 		targetFOV = 120
+		sprintGround = true
 	else:
 		targetFOV = 95
-		SPEED = 3
+		SPEED = 1.95
+		sprintGround = false
 	$Camera3D.set_fov($Camera3D.fov+((targetFOV-$Camera3D.fov)/15))
-	if is_on_floor():
-		groundSpeed = SPEED
+	if not is_on_floor() and sprintGround:
+		SPEED = 2.6
+		targetFOV = 120
+		sprintGround = true
 	
 
 
@@ -78,17 +82,17 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor() or is_on_wall():
 		friction = 0.85
 	else:
-		SPEED = groundSpeed
+
 		friction = 0.95
 
 	if is_on_floor():
 		vx = direction.x * SPEED
 		vy = direction.z * SPEED
 	else:
-		vx = direction.x * SPEED*0.7
-		vy = direction.z * SPEED*0.7
-	vx *= friction
-	vy *= friction
+		vx = direction.x * SPEED
+		vy = direction.z * SPEED
+	vx *= 0.80
+	vy *= 0.80
 	velocity.x += vx
 	velocity.z += vy
 
