@@ -161,7 +161,7 @@ func _physics_process(delta: float) -> void:
 		SPEED = 2.2
 	$Camera3D.set_fov($Camera3D.fov+((targetFOV-$Camera3D.fov)/15))
 	
-	if Input.is_action_pressed("Crouch"):
+	if Input.is_action_pressed("Crouch") and not is_on_wall_only():
 		scale.y = scale.y+((4-scale.y)/15)
 		crouching=true
 	else:
@@ -173,11 +173,14 @@ func _physics_process(delta: float) -> void:
 	input_dir = Input.get_vector("Left", "Right", "Forward", "Back")
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_wall_only():
-		direction.x = 0
+		if not get_wall_normal().x == 0:
+			direction.x = 0
+		else:
+			direction.z = 0
 	if is_on_floor() or is_on_wall():
 		friction = 0.85
 	elif crouching == true:
-		friction = 0.95
+		friction = 0.99
 
 	if is_on_floor():
 		vx = direction.x * SPEED

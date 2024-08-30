@@ -113,22 +113,22 @@ shape = SubResource("ConcavePolygonShape3D_q5m3m")
 [node name="Surf" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Surf"]
-transform = Transform3D(-2.2954e-08, 5.83723e-07, -102.627, 0.622365, 9.58552, -6.62215e-07, 0.782728, -7.62166, -4.43681e-06, -81.675, 6.14149, -23.1736)
+transform = Transform3D(-2.40242e-08, 4.48253e-07, -102.627, 0.866026, 6.12315, -2.56979e-07, 0.5, -10.6056, -4.48597e-06, -83.6236, 2.57855, -23.3905)
 mesh = SubResource("BoxMesh_2ba3e")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Surf"]
-transform = Transform3D(-2.2954e-08, -5.83723e-07, -102.627, -0.542442, 10.288, 2.23048e-07, 0.840094, 6.6429, -4.48041e-06, -82.8026, 6.14149, -11.1916)
+transform = Transform3D(-5.97109e-08, -1.95934e-07, -102.627, -0.866026, 6.12313, 4.48597e-06, 0.5, 10.6056, -4.48597e-06, -82.8026, 2.57855, -3.14281)
 mesh = SubResource("BoxMesh_2ba3e")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Surf"]
-transform = Transform3D(-2.2954e-08, 5.83723e-07, -102.627, 0.622365, 9.58552, -6.62215e-07, 0.782728, -7.62166, -4.43681e-06, -81.675, 6.14149, -23.1736)
+transform = Transform3D(-2.40242e-08, 4.48253e-07, -102.627, 0.866026, 6.12315, -2.56979e-07, 0.5, -10.6056, -4.48597e-06, -83.6236, 2.57855, -23.3905)
 shape = SubResource("ConcavePolygonShape3D_2f22r")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Surf"]
-transform = Transform3D(-2.2954e-08, -5.83723e-07, -102.627, -0.542442, 10.288, 2.23048e-07, 0.840094, 6.64291, -4.48041e-06, -82.8026, 6.14149, -11.1916)
+transform = Transform3D(-5.97109e-08, -1.95934e-07, -102.627, -0.866026, 6.12314, 4.48597e-06, 0.5, 10.6056, -4.48597e-06, -82.8026, 2.57855, -3.14281)
 shape = SubResource("ConcavePolygonShape3D_q5m3m")
 
-[node name="Label3D" type="Label3D" parent="."]
+[node name="Label3D" type="Label3D" parent="Surf"]
 transform = Transform3D(0.0382657, 0, 0.999268, 0, 0.934811, 0, -0.999268, 0, 0.0382657, -35.9854, 20.1307, -14.0885)
 pixel_size = 0.2
 text = "Surfing For Tudor"
@@ -153,3 +153,11 @@ skeleton = NodePath("../../Wall2")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Wall2"]
 transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, -5.6239, 6.14149, -19.2646)
 shape = SubResource("ConcavePolygonShape3D_q5m3m")
+
+[node name="Playtesters" type="Label3D" parent="."]
+transform = Transform3D(-0.97935, 0, -19.7713, 0, 24.64, 0, 25.5747, 0, -0.757117, 52.6833, 20.28, 6.68754)
+text = "Playtesters:
+Tudor
+Toby
+Miggy"
+font_size = 42
