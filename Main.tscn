@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://5k6g5molxtgs"]
+[gd_scene load_steps=18 format=3 uid="uid://5k6g5molxtgs"]
 
 [ext_resource type="Texture2D" uid="uid://bt6wyk0v7hygi" path="res://icon.svg" id="1_6jyoj"]
 [ext_resource type="Script" path="res://charactercontroller.gd" id="1_gtlgq"]
+[ext_resource type="FontFile" uid="uid://bdn7g4pbyqlnp" path="res://Dosis-Bold.ttf" id="3_c2vrt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mv5dr"]
 albedo_texture = ExtResource("1_6jyoj")
@@ -43,6 +44,13 @@ data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_q5m3m"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_oct0x"]
+font = ExtResource("3_c2vrt")
+font_size = 55
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(5, 5)
 
 [node name="Node3D" type="Node3D"]
 
@@ -168,3 +176,15 @@ Tudor
 Toby
 Miggy"
 font_size = 42
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="speed" type="Label" parent="UI"]
+unique_name_in_owner = true
+offset_left = 452.0
+offset_top = 574.0
+offset_right = 672.0
+offset_bottom = 645.0
+text = "speed"
+label_settings = SubResource("LabelSettings_oct0x")
+horizontal_alignment = 1

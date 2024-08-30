@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 var SPEED = 1.0
 const JUMP_VELOCITY = 12
 const sensitivity = 0.4
@@ -140,6 +141,15 @@ func _physics_process(delta: float) -> void:
 	else:
 		$Camera3D.rotation_degrees.z = move_toward($Camera3D.rotation_degrees.z, 0, 1)
 
+	print($Camera3D.rotation_degrees.x)
+
+	if Input.is_action_just_pressed("Dash"):
+		print("Dash")
+		velocity =+ (transform.basis * Vector3(0, 0, -1)).normalized()*300
+		velocity.y =+ ($Camera3D.rotation_degrees.x/180)*50
+		
+		move_and_slide()
+		
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	elif Input.is_action_just_pressed("Jump") and is_on_wall_only():
@@ -196,5 +206,6 @@ func _physics_process(delta: float) -> void:
 
 	velocity.x *= friction
 	velocity.z *= friction
-
+	$%speed.set_text(str(round(abs(sqrt(velocity.x**2+velocity.z**2)))))
 	move_and_slide()
+	
