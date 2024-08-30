@@ -131,3 +131,24 @@ shape = SubResource("ConcavePolygonShape3D_q5m3m")
 transform = Transform3D(0.0382657, 0, 0.999268, 0, 0.934811, 0, -0.999268, 0, 0.0382657, -35.9854, 20.1307, -14.0885)
 pixel_size = 0.2
 text = "Surfing For Tudor"
+
+[node name="Wall2" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.1085, 0, 26.3453)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2"]
+transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, 5.16596, 6.14149, -19.2646)
+mesh = SubResource("BoxMesh_2ba3e")
+skeleton = NodePath("../../Wall2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2"]
+transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, 5.16596, 6.14149, -19.2646)
+shape = SubResource("ConcavePolygonShape3D_2f22r")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Wall2"]
+transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, -5.6239, 6.14149, -19.2646)
+mesh = SubResource("BoxMesh_2ba3e")
+skeleton = NodePath("../../Wall2")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Wall2"]
+transform = Transform3D(1, 0, 0, 0, 12.2463, 0, 0, 0, 33.1604, -5.6239, 6.14149, -19.2646)
+shape = SubResource("ConcavePolygonShape3D_q5m3m")
