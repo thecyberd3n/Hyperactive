@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 
 var SPEED = 1.0
-const JUMP_VELOCITY = 18
+const JUMP_VELOCITY = 30
 const sensitivity = 0.4
 var targetFOV = 60
 var targetRot = 0
@@ -16,14 +16,23 @@ var vz = 0
 const walljumpPower = 80
 var crouching = false
 var onFloorLast =  false
+var cammeshrel =  0
 
 func walljump():
 	velocity = get_wall_normal() * walljumpPower
-	velocity.y = JUMP_VELOCITY
+	velocity.y = 50
 
 func stickToWall():
 	if is_on_wall_only():
-		velocity = Vector3(0-get_wall_normal().x,0-get_wall_normal().y-0.5,0-get_wall_normal().z)*5
+		if not get_wall_normal().x == 0:
+			velocity.x = (0-get_wall_normal().x)*5
+		elif not get_wall_normal().y == 0:
+			velocity.y = (0-get_wall_normal().y-0.5)*5
+		else:
+			velocity.z = (0-get_wall_normal().z)*5
+
+			
+			
 		if not round(get_wall_normal().x) == 0:
 			if rotation_degrees.y < 90 and rotation_degrees.y >-90:
 
@@ -42,6 +51,14 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$Camera3D.rotation_edit_mode = 2
 
+
+func rotateAround(obj, point, axis, angle):
+	var rot = angle + obj.rotation.x
+	var tStart = point
+	obj.global_translate (-tStart)
+	obj.transform = obj.transform.rotated(axis, -rot)
+	obj.global_translate (tStart)
+
 func _input(event):
 	#oldRot = rotation.z
 	#rotation.z = 0
@@ -53,8 +70,7 @@ func _input(event):
 			$Camera3D.rotation_degrees.x = -79
 		if $Camera3D.rotation_degrees.x >80:
 			$Camera3D.rotation_degrees.x = 79
-	#rotation.z = oldRot
-	
+
 
 
 
@@ -64,13 +80,13 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor() and not is_on_wall():
 		if velocity.y >= -10:
 			if crouching:
-				velocity.y -= 60 * delta
+				velocity.y -= 200 * delta
 			else:
-				velocity.y -= 60 * delta
+				velocity.y -= 120 * delta
 	elif is_on_wall():
 
 		if velocity.y >= -10:
-			velocity.y -= 5 * delta
+			velocity.y -= 2 * delta
 
 
 
@@ -89,15 +105,16 @@ func _physics_process(delta: float) -> void:
 
 
 	if Input.is_action_pressed("Sprint") and is_on_floor() and not crouching:
-		SPEED = 3
+		SPEED = 3.5
 		targetFOV = 120
 
-		$AnimationPlayer.play("Run", -1, round(abs(sqrt(velocity.x**2+velocity.z**2)))/18)
+		$AnimationTree.set("parameters/Transition/transition_request", "Running")
 	elif is_on_floor():
 		targetFOV = 95
 		SPEED = 2.2
-		$AnimationPlayer.play("Walk", -1, round(abs(sqrt(velocity.x**2+velocity.z**2)))/7)
+		$AnimationTree.set("parameters/Transition/transition_request", "Idle")
 	$Camera3D.set_fov($Camera3D.fov+((targetFOV-$Camera3D.fov)/15))
+
 	
 	if Input.is_action_pressed("Crouch") and not is_on_wall_only():
 		scale.y = scale.y+((4-scale.y)/15)
@@ -117,9 +134,9 @@ func _physics_process(delta: float) -> void:
 			direction.z = 0
 
 	if is_on_floor() or is_on_wall():
-		friction = 0.85
+		friction = 0.90
 	elif crouching == true:
-		friction = 0.95
+		friction = 1
 
 	if is_on_floor():
 		vx = direction.x * SPEED
@@ -127,16 +144,15 @@ func _physics_process(delta: float) -> void:
 	else:
 		vx = direction.x * SPEED
 		vz = direction.z * SPEED
-	vx *= 0.80
-	vz *= 0.80
+	
+	vx *= friction
+	vz *= friction
 	velocity.x += vx
 	velocity.z += vz
 
 	velocity.x *= friction
 	velocity.z *= friction
-	if crouching and not is_on_floor():
-		velocity.x += abs(velocity.y)/4 * direction.x
-		velocity.z += abs(velocity.y)/4 * direction.z
+
 	$%speed.set_text(str(round(abs(sqrt(velocity.x**2+velocity.z**2)))))
 	move_and_slide()
 	
